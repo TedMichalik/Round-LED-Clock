@@ -1,0 +1,9 @@
+[Unit]
+Description=Round LED Clock
+
+[Service]
+ExecStart=/home/ted/Documents/Code/ws2812/bin/python /home/ted/Documents/Code/Round-LED-Clock.py -c
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
