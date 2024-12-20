@@ -114,7 +114,7 @@ if __name__ == '__main__':
 
                 # Set hands
                 strip.setPixelColor(hour, colorHour)  # Red hour
-                strip.setPixelColor(minute, colorMinute)  # Green hour
+                strip.setPixelColor(minute, colorMinute)  # Green minute
                 strip.setPixelColor(second, colorSecond)  # Blue second
 
                 # Hour and min are on same spot
