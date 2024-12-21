@@ -1,8 +1,6 @@
 [Unit]
 Description=Round LED Clock
-; Start after the network has been configured
-After=network-online.target
-Wants=network-online.target
+After=multi-user.target
 
 [Service]
 ExecStart=/home/clock/Round-LED-Clock/RPi/ws2812/bin/python /home/clock/Round-LED-Clock/RPi/Round-LED-Clock.py -c
