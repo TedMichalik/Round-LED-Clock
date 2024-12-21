@@ -2,7 +2,7 @@
 Description=Round LED Clock
 
 [Service]
-ExecStart=/home/ted/Documents/Code/ws2812/bin/python /home/ted/Documents/Code/Round-LED-Clock.py -c
+ExecStart=/home/clock/Round-LED-Clock/RPi/ws2812/bin/python /home/clock/Round-LED-Clock/RPi/Round-LED-Clock.py -c
 KillSignal=SIGINT
 
 [Install]
