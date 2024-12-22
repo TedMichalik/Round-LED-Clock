@@ -65,8 +65,8 @@ reboot
 ```
 
 SSH back into the Raspberry Pi as user clock. Clone the clock program and go to the folder for the Raspberry Pi.
-git clone https://github.com/TedMichalik/Round-LED-Clock.git
 ```
+git clone https://github.com/TedMichalik/Round-LED-Clock.git
 cd Round-LED-Clock/RPi/
 ```
 
