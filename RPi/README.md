@@ -91,3 +91,10 @@ sudo systemctl enable roundledclock.service
 ```
 
 Check that the push button can shutdown and restart the clock.
+
+
+The 3D printed enclosure for the Raspberry Pi Zero W was obtained here:
+
+Rasperry Pi Zero headless case - roomy  
+by imhavoc on Thingiverse:  
+https://www.thingiverse.com/thing:4861097
