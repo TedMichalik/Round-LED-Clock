@@ -19,7 +19,7 @@ LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/sp
 #LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_FREQ_HZ    = 1250000 # LED signal frequency in hertz (for SPI 1.25 mhz)
 LED_DMA        = 10      # DMA channel to use for generating a signal (try 10)
-LED_BRIGHTNESS = 100     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 LED_OFFSET     = 30      # Position of first LED: 0 = 12 o'clock; 30 = 6 0'clock
@@ -38,7 +38,7 @@ colorNone = Color(  0,   0,   0) # Black
 USE_LED_MOVE_BETWEEN_HOURS = True
 
 # Cutoff times for day / night brightness.
-USE_NIGHTCUTOFF = True   # Enable/Disable night brightness
+USE_NIGHTCUTOFF = False   # Enable/Disable night brightness
 MORNINGCUTOFF = 8         # When does daybrightness begin?   8am
 NIGHTCUTOFF = 20          # When does nightbrightness begin? 8pm
 NIGHTBRIGHTNESS = 20      # Brightness level from 0 (off) to 255 (full brightness)
