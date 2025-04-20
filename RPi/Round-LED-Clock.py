@@ -6,6 +6,8 @@
 # Direct port of Round-LED-Clock.ino
 # Author: Tony DiCola (tony@tonydicola.com)
 # Direct port of the Arduino NeoPixel library strandtest example.
+# Author: BlackberryJamMan
+# https://www.instructables.com/Desktop-Equinox-Clock/
 
 import time
 from datetime import datetime
@@ -44,12 +46,86 @@ NIGHTCUTOFF = 20          # When does nightbrightness begin? 8pm
 NIGHTBRIGHTNESS = 20      # Brightness level from 0 (off) to 255 (full brightness)
 
 # Define functions which animate LEDs in various ways.
+def all_LEDs_off(strip):
+    """Turn off all LEDs."""
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, colorNone)
+        strip.show()
+
 def colorWipe(strip, color, wait_ms=50):
     """Wipe color across display a pixel at a time."""
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
         time.sleep(wait_ms/1000.0)
+
+def quarter_chime(strip, n):
+    all_LEDs_off(strip)
+    startLED = (n - 15 + LED_OFFSET) % strip.numPixels()
+    endLED = startLED + 15
+    for j in range(3):
+        for i in range(startLED, endLED):
+            strip.setPixelColor(i, colorAll)
+        strip.show()
+        time.sleep(0.3)
+        all_LEDs_off(strip)
+        time.sleep(0.3)
+
+def o_clock_chime(strip):
+    all_LEDs_off(strip)
+    colorWipe(strip, colorAll)
+    for j in range(3):
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, colorAll)
+        strip.show()
+        time.sleep(0.3)
+        all_LEDs_off(strip)
+        time.sleep(0.3)
+
+def theaterChase(strip, c):
+    for j in range(10):
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, c)
+            strip.show()
+            time.sleep(0.3)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, colorNone)
+
+def Wheel(pos):
+    """Generate rainbow colors across 0-255 positions."""
+    if pos < 85:
+        return Color(pos * 3, 255 - pos * 3, 0)
+    elif pos < 170:
+        pos -= 85
+        return Color(255 - pos * 3, 0, pos * 3)
+    else:
+        pos -= 170
+        return Color(0, pos * 3, 255 - pos * 3)
+
+def rainbow(strip):
+    for j in range(256):
+        for i in range(0, strip.numPixels()):
+            strip.setPixelColor(i, Wheel((i+j) & 255))
+        strip.show()
+        time.sleep(0.02)
+
+def rainbowCycle(strip):
+    for j in range(256*5):
+        for i in range(0, strip.numPixels()):
+            strip.setPixelColor(i, Wheel(((int(i * 256 / strip.numPixels()) + j) & 255)))
+        strip.show()
+        time.sleep(0.02)
+
+def theaterChaseRainbow(strip):
+    for j in range(0, 256, 8 ):
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, Wheel((i+j) % 255))
+            strip.show()
+            time.sleep(0.3)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, colorNone)
 
 def GetLEDHour(hours, minutes):
     """Get LED number for the hour."""
@@ -106,6 +182,31 @@ if __name__ == '__main__':
                 minute = getLEDMinuteOrSecond(datetime.now().minute)
                 hour = GetLEDHour(datetime.now().hour, datetime.now().minute)
                 if args.debug: print (hour, ':', minute, ':', second)
+ 
+                # Lightshows
+                if (datetime.now().second == 0):
+                    if (datetime.now().minute == 0):
+                        colorWipe(strip, colorAll)
+                        colorWipe(strip, colorHour)
+                        colorWipe(strip, colorMinute)
+                        colorWipe(strip, colorSecond)
+                        theaterChase(strip, colorAll)
+                        rainbow(strip)
+                        rainbowCycle(strip)
+                        theaterChaseRainbow(strip)
+                        o_clock_chime(strip)
+                    if (datetime.now().minute == 15):
+                        theaterChase(strip, colorAll)
+                        quarter_chime(strip, 15)
+                    if (datetime.now().minute == 30):
+                        colorWipe(strip, colorAll)
+                        theaterChaseRainbow(strip)
+                        quarter_chime(strip, 30)
+                    if (datetime.now().minute == 45):
+                        colorWipe(strip, colorAll)
+                        rainbowCycle(strip)
+                        rainbow(strip)
+                        quarter_chime(strip, 45)
 
                 # Clear old spots
                 strip.setPixelColor(last, colorNone)  # old second off
